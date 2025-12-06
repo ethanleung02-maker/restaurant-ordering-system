@@ -46,13 +46,13 @@ restaurant-ordering-system/
 
 Key files:
 
-server.js – backend server (Express + Socket.IO + PostgreSQL)
-public/index.html – customer UI
-public/admin.html – admin UI
-public/js/user.js – customer logic (load menu, manage cart, order status)
-public/js/admin.js – admin logic (load orders, real-time updates)
-public/css/styles.css – fonts, scrollbar styles, mobile optimizations, animations
-package.json – dependencies and npm scripts
+- server.js – backend server (Express + Socket.IO + PostgreSQL)
+- public/index.html – customer UI
+- public/admin.html – admin UI
+- public/js/user.js – customer logic (load menu, manage cart, order status)
+- public/js/admin.js – admin logic (load orders, real-time updates)
+- public/css/styles.css – fonts, scrollbar styles, mobile optimizations, animations
+- package.json – dependencies and npm scripts
 
 ## 3. UI & styling
 The project uses Noto Sans TC as the main font to support Traditional Chinese text and provide a clean, consistent UI.
