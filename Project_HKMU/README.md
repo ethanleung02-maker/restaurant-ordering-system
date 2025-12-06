@@ -57,7 +57,7 @@ body {
 
 Additional CSS utilities:
 
-Hidden scrollbars for cleaner UI:
+Hidden scrollbars:
 
 css
 .hide-scrollbar::-webkit-scrollbar {
@@ -76,7 +76,7 @@ css
     touch-action: manipulation;
 }
 
-Simple slide‑in animation for elements (e.g. order cards, modals):
+Slide‑in animation:
 
 css
 @keyframes slideIn {
@@ -89,8 +89,6 @@ css
 }
 
 4. Database schema (PostgreSQL)
-PostgreSQL is used to store users, menu data and orders.
-
 sql
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
@@ -135,8 +133,6 @@ CREATE TABLE order_items (
 INSERT INTO categories (name) VALUES ('主食'), ('小食'), ('飲品');
 
 5. Database connection (no .env)
-The backend connects to PostgreSQL using the pg library:
-
 javascript
 const { Pool } = require('pg');
 
@@ -148,59 +144,39 @@ const pool = new Pool({
   database: 'your_db_name',
 });
 
-Replace your_db_username, your_db_password, and your_db_name with your own values.
-
 6. Installation
-Clone the repository:
-
 bash
 git clone https://github.com/ethanleung02-maker/restaurant-ordering-system.git
 cd restaurant-ordering-system
-
-Install dependencies:
-
-bash
 npm install
 
-Set up the PostgreSQL database:
-
-Create a new database.
-Run the SQL from section 4. Database schema.
-Edit server.js so the PostgreSQL configuration matches your database.
+Set up PostgreSQL using the schema in section 4, then update server.js with your DB credentials.
 
 7. Running the application
-Development mode (auto‑restart)
+Development (auto‑restart):
+
 bash
 npm run dev
 
-Production / simple run
+Production / simple:
+
 bash
 npm start
 
-Then open:
-
-http://localhost:3000/ – customer page
-http://localhost:3000/admin.html – admin page
+Customer: http://localhost:3000/
+Admin: http://localhost:3000/admin.html
 8. API overview
-GET /api/menu – return menu items with categories
-POST /api/orders – create a new order and emit new_order via Socket.IO
-GET /api/orders/all – get all orders (admin)
-PATCH /api/orders/:id/status – update order status and emit order_update
-Optional: user auth (register/login) using bcrypt and jsonwebtoken.
-
-9. Frontend – customer side
-Loads menu via GET /api/menu
-Manages cart in the browser
-Sends orders via POST /api/orders
-Listens to order status updates via Socket.IO
+GET /api/menu – get menu items
+POST /api/orders – create order, emit new_order
+GET /api/orders/all – list all orders (admin)
+PATCH /api/orders/:id/status – update status, emit order_update
+9. Frontend – customer
 javascript
 const socket = io();
-let cart = [];
-let menu = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
   const res = await fetch('/api/menu');
-  menu = await res.json();
+  const menu = await res.json();
   renderMenu(menu);
 
   socket.on('connect', () => {
@@ -212,10 +188,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
-10. Frontend – admin panel
-Loads all orders via GET /api/orders/all
-Joins "admins" room over Socket.IO
-Receives new_order and order_update events in real time
+10. Frontend – admin
 javascript
 const socket = io();
 let orders = [];
@@ -241,13 +214,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
-11. Technologies used
-Node.js
-Express
-Socket.IO
-PostgreSQL + pg
-bcrypt
-jsonwebtoken (optional)
+11. Technologies
+Node.js, Express, Socket.IO
+PostgreSQL, pg
+bcrypt, jsonwebtoken (optional)
 nodemon
 Google Fonts: Noto Sans TC
-Custom CSS utilities (hidden scrollbars, touch optimization, animations)
+Custom CSS utilities
