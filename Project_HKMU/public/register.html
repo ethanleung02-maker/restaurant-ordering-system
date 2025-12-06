@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>餐廳註冊申請</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md mx-4">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">餐廳合作夥伴註冊</h1>
+            <p class="text-gray-500 text-sm">提交申請後，我們將盡快審核</p>
+        </div>
+
+        <form id="registerForm" class="space-y-4" onsubmit="handleRegister(event)">
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">餐廳名稱</label>
+                <input type="text" id="restaurantName" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" placeholder="例如：大快活 (旺角店)">
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">管理員帳號 (Username)</label>
+                <input type="text" id="username" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" placeholder="您的登入帳號">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">聯絡密碼</label>
+                <input type="password" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-orange-500" placeholder="********">
+            </div>
+
+            <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">
+                提交申請
+            </button>
+        </form>
+        
+        <div class="mt-4 text-center">
+            <a href="/" class="text-sm text-gray-500 hover:text-orange-500">返回首頁</a>
+        </div>
+    </div>
+
+    <script>
+        async function handleRegister(e) {
+            e.preventDefault();
+            const restaurantName = document.getElementById('restaurantName').value;
+            const username = document.getElementById('username').value;
+
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ restaurant_name: restaurantName, username })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    alert('申請已提交！請等待管理員審批。');
+                    window.location.href = '/';
+                }
+            } catch (err) {
+                alert('提交失敗，請稍後再試');
+            }
+        }
+    </script>
+</body>
+</html>

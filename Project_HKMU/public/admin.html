@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>餐廳管理系統 (CMS)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+    
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white hidden md:block fixed h-full">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold tracking-wider">CMS 面板</h1>
+            <p class="text-gray-400 text-sm mt-1">餐廳管理後台</p>
+        </div>
+        <nav class="mt-6 px-4 space-y-2">
+            <a href="#" class="block py-2.5 px-4 rounded bg-orange-600 text-white font-medium">即時訂單</a>
+            <a href="#" class="block py-2.5 px-4 rounded hover:bg-gray-800 text-gray-300 transition">菜單管理</a>
+            <a href="#" class="block py-2.5 px-4 rounded hover:bg-gray-800 text-gray-300 transition">銷售報表</a>
+            <a href="#" class="block py-2.5 px-4 rounded hover:bg-gray-800 text-gray-300 transition">設定</a>
+        </nav>
+        <div class="absolute bottom-0 w-full p-4">
+            <button onclick="logout()" class="flex items-center text-gray-400 hover:text-white transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                登出
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 flex-1 p-8">
+        <header class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800">即時訂單監控</h2>
+            <div class="bg-white px-4 py-2 rounded-lg shadow-sm flex items-center gap-2">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium text-gray-600">系統連線正常</span>
+            </div>
+        </header>
+
+        <!-- Action Buttons in Orders (handled in JS, but let's check if static HTML has emojis) -->
+        <!-- No static emojis in main content area, handled in js/admin.js -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-500 text-sm">待處理訂單</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-1" id="pending-count">0</h3>
+                    </div>
+                    <span class="bg-blue-100 text-blue-600 py-1 px-2 rounded text-xs font-bold">NEW</span>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-orange-500">
+                <div>
+                    <p class="text-gray-500 text-sm">製作中</p>
+                    <h3 class="text-3xl font-bold text-gray-800 mt-1" id="cooking-count">0</h3>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                <div>
+                    <p class="text-gray-500 text-sm">今日總收入</p>
+                    <h3 class="text-3xl font-bold text-gray-800 mt-1">$<span id="total-revenue">0</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6" id="orders-container">
+            <!-- Orders will be injected here -->
+            <div class="col-span-full text-center py-12 text-gray-400 bg-white rounded-xl border border-dashed border-gray-300">
+                尚無新訂單...
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

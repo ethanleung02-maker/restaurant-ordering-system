@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>餐廳登入系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md mx-4">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">歡迎光臨</h1>
+            <p class="text-gray-500">請選擇您的身份登入</p>
+        </div>
+
+        <div class="space-y-4">
+            <button onclick="login('user')" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition transform hover:scale-105">
+                <span>我是顧客 (Customer)</span>
+            </button>
+
+            <button onclick="login('admin')" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-3 transition transform hover:scale-105">
+                <span>我是管理員 (Admin)</span>
+            </button>
+
+            <div class="border-t pt-4 mt-4 grid grid-cols-2 gap-4">
+                <a href="/register.html" class="text-center py-2 px-4 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 text-sm font-bold transition">
+                    註冊新餐廳
+                </a>
+                <button onclick="login('super_admin')" class="text-center py-2 px-4 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 text-sm font-bold transition">
+                    超級管理員
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login(role) {
+            // 模擬簡單登入，實際應連接後端驗證
+            localStorage.setItem('role', role);
+            localStorage.setItem('user', role === 'user' ? 'Guest_' + Math.floor(Math.random()*1000) : 'Admin');
+            
+            if (role === 'user') {
+                window.location.href = '/order.html';
+            } else if (role === 'admin') {
+                window.location.href = '/admin.html';
+            } else if (role === 'super_admin') {
+                window.location.href = '/super_admin.html';
+            }
+        }
+    </script>
+</body>
+</html>

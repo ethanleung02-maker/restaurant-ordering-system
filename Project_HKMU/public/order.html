@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>點餐頁面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-gray-50 pb-24">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="px-4 py-3 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold text-gray-800">滋味餐廳</h1>
+                <p class="text-xs text-gray-500" id="table-number">檯號: 12</p>
+            </div>
+            <div class="relative" onclick="toggleCart()">
+                <div class="bg-orange-100 p-2 rounded-full text-orange-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <span id="cart-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+            </div>
+        </div>
+        <!-- Categories -->
+        <div class="flex overflow-x-auto px-4 py-2 gap-3 hide-scrollbar border-t border-gray-100 bg-white" id="category-list">
+            <button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-orange-500 text-white text-sm font-medium shadow-sm">全部</button>
+            <button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-gray-100 text-gray-600 text-sm font-medium">主食</button>
+            <button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-gray-100 text-gray-600 text-sm font-medium">小食</button>
+            <button class="whitespace-nowrap px-4 py-1.5 rounded-full bg-gray-100 text-gray-600 text-sm font-medium">飲品</button>
+        </div>
+    </header>
+
+    <!-- Menu List -->
+    <main class="p-4 space-y-4" id="menu-list">
+        <!-- Menu Items will be injected here -->
+        <div class="animate-pulse space-y-4">
+            <div class="h-32 bg-gray-200 rounded-xl"></div>
+            <div class="h-32 bg-gray-200 rounded-xl"></div>
+        </div>
+    </main>
+
+    <!-- Floating Action Button (Place Order) -->
+    <div class="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 shadow-lg z-40 hidden" id="bottom-cart-bar">
+        <div class="flex justify-between items-center mb-2">
+            <span class="text-gray-600">共 <span id="cart-count">0</span> 項</span>
+            <span class="text-xl font-bold text-orange-600">$<span id="cart-total">0</span></span>
+        </div>
+        <button onclick="placeOrder()" class="w-full bg-orange-500 text-white font-bold py-3 rounded-xl shadow-lg active:scale-95 transition-transform">
+            立即下單
+        </button>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex flex-col justify-end">
+        <div class="bg-white rounded-t-2xl p-6 animate-slide-in max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">您的訂單</h2>
+                <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center text-xl font-bold mb-4">
+                    <span>總計</span>
+                    <span class="text-orange-600">$<span id="modal-total">0</span></span>
+                </div>
+                <button onclick="placeOrder()" class="w-full bg-orange-500 text-white font-bold py-3 rounded-xl">
+                    確認下單
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/order.js"></script>
+</body>
+</html>
