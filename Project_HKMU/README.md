@@ -99,7 +99,7 @@ css
     animation: slideIn 0.3s ease-out forwards;
 }
 
-These classes are used on scrollable containers, buttons and new UI elements to improve the user experience on both desktop and mobile.
+- These classes are used on scrollable containers, buttons and new UI elements to improve the user experience on both desktop and mobile.
 
 ## 4. Database schema (PostgreSQL)
 PostgreSQL is used to store users, menu data and orders.
@@ -108,12 +108,12 @@ PostgreSQL is used to store users, menu data and orders.
 
 Table roles:
 
-users – user accounts (customers / admins), with hashed passwords and roles.
-categories – menu categories (e.g. main dishes, snacks, drinks).
-menu_items – individual menu items, linked to categories, with prices and images.
-orders – one row per order, linked to the user who created it, with status and total.
-order_items – items inside each order, linked to orders and menu_items.
-The database is responsible for persistently storing all users, menu items, categories, orders and order details.
+- users – user accounts (customers / admins), with hashed passwords and roles.
+- categories – menu categories (e.g. main dishes, snacks, drinks).
+- menu_items – individual menu items, linked to categories, with prices and images.
+- orders – one row per order, linked to the user who created it, with status and total.
+- order_items – items inside each order, linked to orders and menu_items.
+- The database is responsible for persistently storing all users, menu items, categories, orders and order details.
 
 
 ## 5. Installation
@@ -173,14 +173,23 @@ Optionally, endpoints for user registration / login using hashed passwords (bcry
 The customer page (e.g. public/index.html + a JS file such as user.js) does:
 
 On page load:
+
 Calls GET /api/menu to load menu data from the database.
+
 Renders items with image, name, description and price.
+
 Manages a shopping cart in browser memory.
+
 Sends orders to the backend via POST /api/orders.
+
 Uses Socket.IO to:
+
 Connect to the server: const socket = io();
+
 Join a customer room (e.g. socket.emit('join', 'user_room')).
+
 Listen for order_update events and show updated order statuses.
+
 
 ## 9. Frontend – admin panel (real‑time orders)
 The admin page (public/admin.html + public/js/admin.js) acts as a real‑time order dashboard.
@@ -188,25 +197,35 @@ The admin page (public/admin.html + public/js/admin.js) acts as a real‑time or
 Main behaviour:
 
 On page load:
+
 Calls GET /api/orders/all to load all existing orders from PostgreSQL.
+
 Opens a Socket.IO connection and joins an "admins" room.
+
 Listens for:
+
 new_order – when a customer creates an order:
+
 Adds it to the local orders array
+
 Re-renders the list
+
 Plays a notification sound
+
 order_update – when an order status is changed:
+
 Updates that order in the orders array
+
 Re-renders the list
 
 ## 10. Technologies used
-Node.js – JavaScript runtime for backend
-Express – HTTP server and REST API
-Socket.IO – real-time communication (orders and status updates)
-PostgreSQL – relational database for persistent storage
-pg – PostgreSQL client for Node.js
-bcrypt – password hashing
-jsonwebtoken – JWT-based authentication (if implemented)
-nodemon – automatic server restart during development
-Google Fonts: Noto Sans TC – main UI font
-Custom CSS utilities – hidden scrollbars, touch optimization, slide-in animations
+- Node.js – JavaScript runtime for backend
+- Express – HTTP server and REST API
+- Socket.IO – real-time communication (orders and status updates)
+- PostgreSQL – relational database for persistent storage
+- pg – PostgreSQL client for Node.js
+- bcrypt – password hashing
+- jsonwebtoken – JWT-based authentication (if implemented)
+- nodemon – automatic server restart during development
+- Google Fonts: Noto Sans TC – main UI font
+- Custom CSS utilities – hidden scrollbars, touch optimization, slide-in animations
