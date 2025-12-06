@@ -120,6 +120,7 @@ Table roles:
 Clone the repository:
 bash
 git clone https://github.com/ethanleung02-maker/restaurant-ordering-system.git
+
 cd restaurant-ordering-system
 
 Install dependencies:
